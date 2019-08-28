@@ -5,11 +5,14 @@ import random
 VISINA = 10
 SIRINA = 8
 TEZAVNOST = 25
+
 ZMAGA = "+"
 PORAZ = "-"
+
 ODKRITA = "od"
 ZAKRITA = "zak"
 ZASTAVICA = "zas"
+
 NAPAKA = "eee"
 
 
@@ -22,6 +25,7 @@ class Igra:
         self.sirina = sirina
         self.prvi = (prvi_x,prvi_y)
         self.tezavnost = tezavnost
+        self.poraz = False
 
         matrika_os = polje_osnovno(visina, sirina, tezavnost, prvi_y = 0, prvi_x = 0)
         matrika_so = polje_sosedi(matrika_os)
@@ -41,14 +45,17 @@ class Igra:
             for x in range(self.sirina):
                 (_,b,c) = sl[(x,y)]
                 if c == ODKRITA:
-                    vrsta += str(b)
+                    if b == 0:
+                        vrsta += " "
+                    else:
+                        vrsta += str(b)
                 elif c == ZAKRITA:
                     vrsta += "X"
                 elif c == ZASTAVICA:
-                    vrsta += "¶"
+                    vrsta += "?"
                 vrsta += " "
-            niz += vrsta.strip() + "\n"
-        return niz.strip("\n")
+            niz += vrsta + "\n"
+        return niz
     
     def odkrij(self, x, y):
         sl = self.slovar
@@ -75,6 +82,7 @@ class Igra:
         if stanje == ZASTAVICA or stanje == ODKRITA:
             return NAPAKA
         elif bomba == True:
+            self.poraz = True
             return PORAZ
         else:
             self.odkrij(x,y)
@@ -167,17 +175,16 @@ def polje_sosedi(matrika):
 #-----------------------------------------------------------
 
 
-
+'''
 
 qwert = Igra(10,10,20)
 for x in range(20):
     qwert.odkrij(random.randrange(10), random.randrange(10))
     qwert.posadi(random.randrange(10), random.randrange(10))
     print(qwert)
-    print("\n")
     
 
 print(qwert)
 qwert.zmaga()
 
-
+'''
