@@ -6,7 +6,26 @@ import model
 
 def izpis_igre(igra):
     niz = "==" * igra.sirina + "\n"
-    niz += str(igra)
+    if igra.sirina == 9:
+        niz += "a b c d e f g h i\n"
+    elif igra.sirina == 12:
+        niz += "a b c d e f g h i j k l\n"
+    sl = igra.slovar
+    for y in range(igra.visina):
+        vrsta = ""
+        for x in range(igra.sirina):
+            (_,b,c) = sl[(x,y)]
+            if c == model.ODKRITA:
+                if b == 0:
+                    vrsta += " "
+                else:
+                    vrsta += str(b)
+            elif c == model.ZAKRITA:
+                vrsta += "X"
+            elif c == model.ZASTAVICA:
+                vrsta += "?"
+            vrsta += " "
+        niz += vrsta + str(y + 1) + " \n"
     print(niz)
 
 def izpis_zmage():
@@ -35,8 +54,22 @@ def preveri_vnost(igra, vnos):
     else:
         return False
     
-    if sez[0] in ["o", "z", "odkrij", "zastavica"] and 0 < int(sez[1]) <= igra.sirina and 0 < int(sez[2]) <= igra.visina and len(sez) == 3:
-        return sez
+    if len(sez) != 3:
+        return False
+
+    (oblika, crka, stevilka) = sez
+
+    if isinstance(oblika, str) and isinstance(crka, str) and stevilka in "0123456789101112131415":
+        pass
+    else:
+        return False
+
+    crka = abc_v_int(crka)
+    stevilka = int(stevilka)
+
+
+    if oblika in ["o", "z", "odkrij", "zastavica"] and 0 < crka <= igra.sirina and 0 < stevilka <= igra.visina:
+        return [oblika, crka, stevilka]
     else:
         return False
 
@@ -56,17 +89,24 @@ def vnesi(igra, niz):
 
 
 def izbira_tezavnosti():
-    niz = input("Izberite težavnost!\nLAHKA ==> 6X6 z 7 minami\nSREDNJE ==> 9x9 z 20 minami\nTEZKO ==> 12x12 z 40 minami\n").lower()
+    niz = input("Izberite težavnost!\nLAHKA ==> 9x9 z 12 minami\nSREDNJE ==> 12x12 z 25 minami\nTEZKO ==> 12x12 z 54 minami\n").lower()
     if niz == "lahka":
-        return (6,6,7)
+        return (9,9,12)
     elif niz == "srednje":
-        return (9,9,20)
+        return (12,12,25)
     elif niz == "tezko":
-        return (12,12,40)
+        return (12,12,54)
     else:
         print("Neustrezen vnos")
         return izbira_tezavnosti()
 
+def abc_v_int(znak):
+    '''Funkcija crko pretvori v ustrezno stevilko'''
+    crka = znak.lower()
+    if crka in "abcdefghijkl":
+        return "abcdefghijkl".index(crka) + 1
+    else:
+        return 100
 
 
 
@@ -85,17 +125,34 @@ def nova_igra():
 
 
 def zazeni_vmesnik():
+    #Igralec najprej izbere tezavnost
     a,b,c = izbira_tezavnosti()
 
-    for _ in range(a):
-        print("X " * a)
+    if a == 9:
+        print("a b c d e f g h i")
+    elif a == 12:
+        print("a b c d e f g h i j k l")
+    for y in range(a):
+        print("X " * a + "{}".format(y + 1))
 
-    niz1 = zahtevaj_vnos()
-    d,e = niz1.split()[1:]
 
-    
+    #Igralec izbere prvo polje preden zares začnemo igro, tako preprečimo, da bi bila že prva poteza na bombi
+    while True:
+        vnos = zahtevaj_vnos()
+        lep = preveri_vnost(model.Igra(a,b,c), vnos)
+
+        if lep == False:
+            continue
+        else:
+            (_,d,e) = lep
+            break
+
+
+    #Naredimo igro in vnesemo prvo potezo
     igra = model.Igra(a,b,c, int(d) - 1, int(e) - 1)
-    vnesi(igra, niz1)
+    vnesi(igra, vnos)
+
+    #Dejansko zacnemo igro
     while True:
         #Izpišemo stanje
         print(izpis_igre(igra))
@@ -116,7 +173,6 @@ def zazeni_vmesnik():
     
     nova_igra()
     return
-
 
 
 zazeni_vmesnik()

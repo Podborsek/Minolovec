@@ -2,9 +2,6 @@ import math
 import random
 
 #Definiramo konstante
-VISINA = 10
-SIRINA = 8
-TEZAVNOST = 25
 
 ZMAGA = "+"
 PORAZ = "-"
@@ -27,7 +24,7 @@ class Igra:
         self.tezavnost = tezavnost
         self.poraz = False
 
-        matrika_os = polje_osnovno(visina, sirina, tezavnost, prvi_y = 0, prvi_x = 0)
+        matrika_os = polje_osnovno(visina, sirina, tezavnost, prvi_y, prvi_x)
         matrika_so = polje_sosedi(matrika_os)
 
         slovar = {}
@@ -77,7 +74,7 @@ class Igra:
 
     def izkoplji(self, x, y):
         seznam = self.slovar[(x,y)]
-        (bomba, sosede, stanje) = seznam
+        (bomba, _, stanje) = seznam
 
         if stanje == ZASTAVICA or stanje == ODKRITA:
             return NAPAKA
@@ -120,7 +117,7 @@ class Igra:
 #-----------------------------------------------------------------------
 
 
-def polje_osnovno(visina, sirina, tezavnost, prvi_y = 0, prvi_x = 0):
+def polje_osnovno(visina, sirina, tezavnost, prvi_y, prvi_x):
     '''Funkcija sestavi polje navedena velikosti in primerne tezavnosti(stevilo min). Vrne True/False matriko.'''
     #Naredimo seznam sprejemljivih lokacij za mine
     vse = list(range(visina * sirina))
@@ -175,16 +172,3 @@ def polje_sosedi(matrika):
 #-----------------------------------------------------------
 
 
-'''
-
-qwert = Igra(10,10,20)
-for x in range(20):
-    qwert.odkrij(random.randrange(10), random.randrange(10))
-    qwert.posadi(random.randrange(10), random.randrange(10))
-    print(qwert)
-    
-
-print(qwert)
-qwert.zmaga()
-
-'''
