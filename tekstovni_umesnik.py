@@ -47,6 +47,9 @@ def preveri_vnost(igra, vnos):
     n1 = vnos.strip()
     niz = n1.lower()
 
+    if niz == "restart" or niz == "start":
+        zazeni_vmesnik()
+
     if "," in niz:
         sez = niz.split(",")
     elif " " in niz:
@@ -149,7 +152,7 @@ def zazeni_vmesnik():
 
 
     #Naredimo igro in vnesemo prvo potezo
-    igra = model.Igra(a,b,c, int(d) - 1, int(e) - 1)
+    igra = model.Igra(a,b,c, int(e) - 1, int(d) - 1)
     vnesi(igra, vnos)
 
     #Dejansko zacnemo igro
