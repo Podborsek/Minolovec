@@ -1,14 +1,4 @@
 %import model
-%igra = model.Igra(12,12,50)
-%igra.posadi(6,7)
-%igra.posadi(2,9)
-%igra.izkoplji(0,0)
-%
-%
-%
-%
-%
-%
 
 <head>
     <title>Minolovec</title>
@@ -31,13 +21,6 @@ table {
      cursor:pointer;
   }
   
-  .butt2 {
-     border: 1px outset;
-     background-color: darkgray;
-     height:50px;
-     width:300px;
-     cursor:pointer;
-  }
   
   .butt:hover {
      background-color: gainsboro;
@@ -95,18 +78,11 @@ table {
 
 
 <table>
-    <tr>
-        <td colspan="6">
-            <input class="butt2" type="button">
-        </td>
-        <td colspan="6">
-            <input class="butt2" type="button">
-        </td>
-    </tr>
     %for y in range(12):
         <tr> 
             %for x in range(12):
                 <td>
+                    %koordinata = (x,y)
                     %slovar = igra.slovar
                     %(bomba, sosede, odkritost) = slovar[(x,y)]
                     %if odkritost == model.ODKRITA:
@@ -116,16 +92,19 @@ table {
                     %else:
                     %    vrednost = "🚩"
                     %end
-                    <div class="dropdown">
-                      <button class="dropbtn"> {{vrednost}}</button>
-                      <div class="dropdown-content">
-                        <input class="butt" type="button" value="⛏️">
-                        <input class="butt" type="button" value="🚩">
+                      <div class="dropdown">
+                        <button class="dropbtn" disabled="disabled"> {{vrednost}}</button>
+                        <div class="dropdown-content">
+                          <form action="/igraj" method="POST">
+                          <button class="butt" value="o,{{x}},{{y}}" name="gumb"> ⛏️ </button>
+                          <button class="butt" value="z,{{x}},{{y}}" name="gumb"> 🚩 </button>
+                          </form>
+                        </div>
                       </div>
-                    </div>
                 </td>
             %end
         </tr>
     %end
 </table>
+
 
