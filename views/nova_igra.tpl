@@ -1,5 +1,5 @@
 %rebase("base.tpl")
-%if int(tezavnost) == 10:
+%if int(tezavnost) == 15:
 %   visina = 8
 %   sirina = 8
 %else:

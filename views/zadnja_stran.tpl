@@ -1,7 +1,5 @@
 %rebase("base.tpl")
-
-<h1>{{vrednost}}</h1>
-
-<form action="/">
-    <button>Nazaj na izbiro tezavnosti</button>
-</form>
+%if vrednost == "ZMAGA":
+    <h2>Čestitke! <br> Uspešno ste označili vse mine.</h2>
+%elif vrednost == "PORAZ":
+    <h2>B U M !<br> Odkopali ste mino.</h2>

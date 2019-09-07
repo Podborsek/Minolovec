@@ -19,7 +19,6 @@ def nova_igra():
 @bottle.post("/igraj")
 def ugibaj():
     ugib = bottle.request.forms.getunicode("ugib")
-    print(igre)
 
     if ugib[0] == "n":
         (_,a,b,c,d,e) = ugib.split(",")
@@ -39,7 +38,7 @@ def ugibaj():
     if igra.zmaga():
         return bottle.template("zadnja_stran.tpl", vrednost="ZMAGA")
     elif igra.poraz == True:
-        return bottle.template("zadnja_stran.tpl", vrednost="BUM")
+        return bottle.template("zadnja_stran.tpl", vrednost="PORAZ")
 
 
     return bottle.template("main.tpl", igra=igra)
