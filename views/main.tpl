@@ -25,25 +25,25 @@
                         <button class="dropbtn" style="background-color: #C5CAE9; color:black" disabled="disabled"> <b>{{vrednost}}</b> </button>
                     %elif odkritost == model.ZAKRITA:
                         <div class="dropdown">
-                          <button class="dropbtn" disabled="disabled"></button>
-                          <div class="dropdown-content">
                             <form action="/igraj" method="POST">
-                              <button class="butt" value="o,{{x}},{{y}}" name="gumb"> ⛏️ </button>
-                              <button class="butt" value="z,{{x}},{{y}}" name="gumb"> 🚩 </button>
+                            <button class="dropbtn" value="o,{{x}},{{y}}" name="ugib"></button>
                             </form>
-                          </div>
+                            <div class="dropdown-content">
+                                <form action="/igraj" method="POST">
+                                <button class="butt" value="z,{{x}},{{y}}" name="ugib">🚩</button>
+                                </form>
+                            </div>
                         </div>
                     %else:
                         <div class="dropdown">
                             <button class="dropbtn" disabled="disabled"> {{"🚩"}}</button>
                             <div class="dropdown-content">
                               <form action="/igraj" method="POST">
-                              <button class="butt" value="z,{{x}},{{y}}" name="gumb"> 🚩 </button>
+                              <button class="butt" value="z,{{x}},{{y}}" name="ugib"> 🚩 </button>
                               </form>
                             </div>
                           </div>
                     %end
-
                 </td>
             %end
         </tr>

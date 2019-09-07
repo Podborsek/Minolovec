@@ -1,38 +1,46 @@
 import model
 import bottle
 
-igra = model.Igra(12,20,40,5,5)
-'''
+igre = []
+
 @bottle.get("/")
-def index():
+def izbira_tezavnosti():
     return bottle.template("izbira_tezavnosti.tpl")
 
 
 
 @bottle.post("/nova_igra")
 def nova_igra():
-    global tezavnost
     tezavnost = bottle.request.forms.getunicode("tezavnost")
-    print(tezavnost)
     return bottle.template("nova_igra.tpl", tezavnost=tezavnost)
 
-'''
 
-@bottle.get("/")
-def index():
-    return bottle.template("main.tpl", igra=igra)
 
 @bottle.post("/igraj")
 def ugibaj():
-    ugib = bottle.request.forms.getunicode("gumb")
+    ugib = bottle.request.forms.getunicode("ugib")
+    print(igre)
 
-    tip,x,y = ugib.split(",")
-    x,y = int(x),int(y)
+    if ugib[0] == "n":
+        (_,a,b,c,d,e) = ugib.split(",")
+        igre.append(model.Igra(int(a),int(b),int(c),int(e),int(d)))
+        igra = igre[-1]
+        igra.izkoplji(int(d),int(e))
+    else:
+        igra = igre[-1]
+        tip,x,y = ugib.split(",")
+        x,y = int(x),int(y)
 
-    if tip == "o":
-        igra.izkoplji(x,y)
-    elif tip == "z":
-        igra.posadi(x,y)
+        if tip == "o":
+            igra.izkoplji(x,y)
+        elif tip == "z":
+            igra.posadi(x,y)
+
+    if igra.zmaga():
+        return bottle.template("zadnja_stran.tpl", vrednost="ZMAGA")
+    elif igra.poraz == True:
+        return bottle.template("zadnja_stran.tpl", vrednost="BUM")
+
 
     return bottle.template("main.tpl", igra=igra)
 
@@ -42,3 +50,4 @@ def ugibaj():
 
 
 bottle.run(reloder=True, debug=True)
+

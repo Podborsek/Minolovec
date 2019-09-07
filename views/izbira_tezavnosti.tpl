@@ -5,17 +5,17 @@
     <tr>
         <th>
             <form action="/nova_igra" method="post">
-                <button value="1" name="tezavnost">Lako</button>
+                <button value="10" name="tezavnost">Lahko: <br> Polje velikosti 8x8 z ? minami</button>
             </form>
         </th>
         <th>
             <form action="/nova_igra" method="post">
-                <button value="2" name="tezavnost">Srednje</button>
+                <button value="40" name="tezavnost">Srednje: <br> Polje velikosti 20x12 z ? minami</button>
             </form>
         </th>
         <th>
             <form action="/nova_igra" method="post">
-               <button value="3" name="tezavnost">Tezko</button>
+               <button value="50" name="tezavnost">Tezko: <br> Polje velikosti 20x12 z ? minami</button>
             </form>
         </th>
     </tr>

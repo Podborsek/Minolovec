@@ -16,7 +16,6 @@
     font-size: 30px;
     border-radius: 3px;
     text-align: center;
-    cursor: pointer;
   }
   
   
