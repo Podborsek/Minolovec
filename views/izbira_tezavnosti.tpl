@@ -5,7 +5,7 @@
     <tr>
         <th>
             <form action="/nova_igra" method="post">
-                <button class="butt2" value="15" name="tezavnost">LAHKO: <br> Polje velikosti 8x8 z 15 minami</button>
+                <button class="butt2" value="8" name="tezavnost">LAHKO: <br> Polje velikosti 8x8 z 8 minami</button>
             </form>
         </th>
         <th>

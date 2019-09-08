@@ -55,6 +55,7 @@ class Igra:
         return niz
     
     def odkrij(self, x, y):
+        '''Odkrije polje x,y in sosednja polja, ce nobeno nima mine'''
         sl = self.slovar
         seznam = sl[(x,y)]
         bomba = seznam[0]
@@ -87,6 +88,7 @@ class Igra:
 
     
     def posadi(self, x, y):
+        '''Postavi zastavico na koordinato x,y'''
         stanje = self.slovar[(x,y)][2]
 
         if stanje == ODKRITA:
@@ -146,6 +148,7 @@ def polje_sosedi(matrika):
     visina = len(matrika)
     sirina = len(matrika[0])
 
+    #Matriko "oblazinimo", da nimamo problemov z index out of range
     oblazinjena = [[False for x in range(sirina + 2)]]
     for vrstica in matrika:
         oblazinjena.append([False] + vrstica + [False])

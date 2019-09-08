@@ -6,10 +6,12 @@ import model
 
 def izpis_igre(igra):
     niz = "==" * igra.sirina + "\n"
+
     if igra.sirina == 9:
         niz += "a b c d e f g h i\n"
     elif igra.sirina == 12:
         niz += "a b c d e f g h i j k l\n"
+
     sl = igra.slovar
     for y in range(igra.visina):
         vrsta = ""
@@ -26,6 +28,7 @@ def izpis_igre(igra):
                 vrsta += "?"
             vrsta += " "
         niz += vrsta + str(y + 1) + " \n"
+
     print(niz)
 
 def izpis_zmage():
@@ -42,7 +45,7 @@ def izpis_poraza():
 def zahtevaj_vnos():
     return input("Napišite tip ugibanja in kooordinate polja:")
 
-def preveri_vnost(igra, vnos):
+def preveri_vnos(igra, vnos):
     '''Vrne False, če je vnos neustrezen, drugače vrne ustrezen seznam'''
     n1 = vnos.strip()
     niz = n1.lower()
@@ -77,7 +80,7 @@ def preveri_vnost(igra, vnos):
         return False
 
 def vnesi(igra, niz):
-    lep = preveri_vnost(igra, niz)
+    lep = preveri_vnos(igra, niz)
     if lep == False:
         print("Neustrezen vnos")
         vnesi(igra, zahtevaj_vnos())
@@ -92,7 +95,7 @@ def vnesi(igra, niz):
 
 
 def izbira_tezavnosti():
-    niz = input("Izberite težavnost!\nLAHKA ==> 9x9 z 12 minami\nSREDNJE ==> 12x12 z 25 minami\nTEZKO ==> 12x12 z 54 minami\n").lower()
+    niz = input("Za pričetek izberite težavnost!\nLAHKA ==> 9x9 z 12 minami\nSREDNJE ==> 12x12 z 25 minami\nTEZKO ==> 12x12 z 54 minami\n").lower()
     if niz == "lahka":
         return (9,9,12)
     elif niz == "srednje":
@@ -128,6 +131,9 @@ def nova_igra():
 
 
 def zazeni_vmesnik():
+    #Navodila
+    print("M I N O L O V E C\n\nCilj igre je označiti vse mine. Številka v polju pove koliko min je na sosednjih poljih.\nČe mislite, da je polje varno ga lahko odkrijete. Polja na katerih so mine označite z zastavico.\nPolje odkrijete/označite tako, da napišete tip ugibanja o/z, potem črko stolpca in na koncu številko vrstice,\nna primer: z c 5\nIgra se konča, ko označite vse mine ali ko odkopljete mino.\n")
+
     #Igralec najprej izbere tezavnost
     a,b,c = izbira_tezavnosti()
 
@@ -135,14 +141,15 @@ def zazeni_vmesnik():
         print("a b c d e f g h i")
     elif a == 12:
         print("a b c d e f g h i j k l")
+
     for y in range(a):
         print("X " * a + "{}".format(y + 1))
 
 
-    #Igralec izbere prvo polje preden zares začnemo igro, tako preprečimo, da bi bila že prva poteza na bombi
+    #Igralec izbere prvo polje preden zares začnemo igro, tako preprečimo, da bi bila že prva poteza na mini
     while True:
         vnos = zahtevaj_vnos()
-        lep = preveri_vnost(model.Igra(a,b,c), vnos)
+        lep = preveri_vnos(model.Igra(a,b,c), vnos)
 
         if lep == False:
             continue
